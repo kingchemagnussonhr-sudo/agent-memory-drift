@@ -12,7 +12,7 @@ This creates a governance question:
 
 If that distinction is lost, an inference can drift along two different paths: epistemic promotion that outruns its evidential support, or operational activation that exceeds its policy basis. Either failure is auditable on its own, and they compound into a more serious risk whenever a record with unearned epistemic status reaches a decision or action, whether that reach was policy-permitted or unauthorized.
 
-This repository develops a risk model for that process, called **self-reinforcing epistemic drift**, and explores how to make it auditable. The full argument, including the memory schema, drift mechanisms, and lifecycle test protocol, is developed in [*The Agent's Epistemic Baggage*](./agents-epistemic-baggage.md).
+This repository develops a risk model for that process, called **self-reinforcing epistemic drift**, and explores how to make it auditable. The full argument, including the memory schema, drift mechanisms, and lifecycle test protocol, is developed in [*The Agent's Epistemic Baggage*](./agents-epistemic-baggage.md). A first implementable specification, typed audit objects, transition rules, controls, metrics, and a reproducible test, is developed in [*Agent Memory Drift: Audit Operationalization v0.1*](./agent-memory-drift-operationalization-v0.1.md). If you are about to run an audit rather than read the specification cover to cover, start with the [*User Guide*](./agent-memory-drift-user-guide.md) instead.
 
 ## Scope
 
@@ -54,7 +54,7 @@ A single status label is insufficient. An auditable memory record should keep di
 
 | Field | Examples |
 | --- | --- |
-| Representation type | received input, sensor event, tool output, source claim, agent inference, decision, action |
+| Representation type | received input, sensor event, tool output, source claim, agent inference |
 | Provenance | source, timestamp, tool, agent, link to underlying evidence |
 | Validation state | untested, supported, contradicted, validated, rejected |
 | Temporal validity | current, stale, expired, superseded |
@@ -64,7 +64,7 @@ A single status label is insufficient. An auditable memory record should keep di
 | Authority basis | policy rule, risk classification, human approval, delegated permission |
 | Usage and decision lineage | retrieval event, rank, retrieval score, prompt position, explicit reference in reasoning or output, consuming agent, affected decision or action |
 
-Provenance establishes origin, not truth. A trusted source can be wrong, and an authenticated agent inference remains an inference. Representation type also covers stored records of the agent's own outputs, such as a decision or an action, which carry provenance and change history but not a meaningful truth-based validation state; an action is authorized, executed, successful, or failed rather than supported or contradicted, and its weight is assessed through its underlying evidence and its usage and decision lineage.
+Provenance establishes origin, not truth. A trusted source can be wrong, and an authenticated agent inference remains an inference. Representation type covers epistemic records only; a decision or an action does not carry a meaningful truth-based validation state, an action is authorized, executed, successful, or failed rather than supported or contradicted, so it is represented as a linked operational event rather than as a further representation type. It still carries its own provenance and event history, and its weight is assessed through its underlying evidence together with its usage and decision lineage.
 
 Uncertainty should be grounded in evidence and validation state rather than relying solely on a model's self-reported confidence, which is why evidence relation also carries the strength, independence, and quality of the supporting material.
 
@@ -163,14 +163,14 @@ This project operates at a complementary, record-level layer: it asks how a part
 
 ## Repository roadmap
 
-- [ ] Formalize the memory record schema.
-- [ ] Define permitted epistemic status transitions and their evidential basis.
-- [ ] Define permitted authority transitions and their policy basis.
-- [ ] Specify decision-lineage and logging requirements.
-- [ ] Convert control points into complete audit controls.
-- [ ] Define metrics and acceptance criteria.
-- [ ] Build reproducible lifecycle test cases.
-- [ ] Evaluate false promotion, correction failure, and knowledge ossification.
+- [x] Formalize the memory record schema, see the [operationalization document](./agent-memory-drift-operationalization-v0.1.md).
+- [x] Define permitted epistemic status transitions and their evidential basis.
+- [x] Define permitted authority transitions and their policy basis.
+- [x] Specify decision-lineage and logging requirements.
+- [x] Convert control points into complete audit controls.
+- [x] Define metrics and acceptance criteria (provisional, pending empirical validation).
+- [x] Build reproducible lifecycle test cases (AMD-T01 and AMD-T02, covering rejection and reactivation).
+- [x] Evaluate false promotion, correction failure, and knowledge ossification (AMD-T02's ossification check; broader evaluation still open).
 - [ ] Map controls to relevant AI governance and security frameworks.
 
 ## Contributing
